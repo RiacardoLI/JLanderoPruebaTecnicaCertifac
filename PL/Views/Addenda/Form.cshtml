@@ -40,7 +40,7 @@
     <div class="row">
         <div class="col-md-12">
             @Html.LabelFor(model => model.FechaModificacion)
-            @Html.TextBoxFor(model => model.FechaModificacion, new { @class = "form-control" })
+            @Html.TextBoxFor(model => model.FechaModificacion, "{0:yyyy-MM-dd}", new { @class = "form-control" , type="date" })
         </div>
     </div>
 
