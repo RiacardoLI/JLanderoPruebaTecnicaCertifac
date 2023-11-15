@@ -1,0 +1,77 @@
+﻿@model ML.Addendas
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Addendas</h2>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm("Form", "Addenda", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="row">
+        <div class="col-md-12">
+            @Html.LabelFor(model => model.IdAddenda)
+            @Html.TextBoxFor(model => model.IdAddenda, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            @Html.LabelFor(model => model.NombreAddenda)
+            @Html.TextBoxFor(model => model.NombreAddenda, new { @class = "form-control" })
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            @Html.LabelFor(model => model.XML)
+            @Html.TextBoxFor(model => model.XML, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            @Html.LabelFor(model => model.FechaModificacion)
+            @Html.TextBoxFor(model => model.FechaModificacion, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            @Html.LabelFor(model => model.Usuario)
+            @Html.TextBoxFor(model => model.Usuario, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            @Html.LabelFor(model => model.Estado)
+            @Html.RadioButtonFor(model => model.Estado, true) @Html.Label("Activo")
+            @Html.RadioButtonFor(model => model.Estado, false) @Html.Label("Inactivo")
+
+        </div>
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-md-1">
+            <input type="submit" data-toggle="modal" class="btn btn-success" value="Guardar" />
+        </div>
+
+        <div class="col-md-11">
+
+            @Html.ActionLink("Cancelar", "GetAll", "Addenda", new { @class = "btn btn-danger" })
+        </div>
+    </div>
+
+
+}

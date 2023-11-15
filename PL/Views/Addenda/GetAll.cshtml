@@ -1,0 +1,159 @@
+﻿@model ML.Addendas
+@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    /* CSS for switch*/
+    .switch {
+        position: relative;
+        display: flex;
+        width: 60px;
+        height: 34px;
+    }
+        /* Hiding the default checkbox*/
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+    /* The slider */
+    .slider {
+        border-radius: 100px;
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #b92109; /*Sin status*/
+        -webkit-transition: .3s;
+        transition: .3s;
+    }
+        /* Before sliding */
+        .slider:before {
+            border-radius: 100px;
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .3s;
+            transition: .3s;
+        }
+
+    input:checked + .slider {
+        background-color: #09b91e; /*cambio de status*/
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #564311;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+</style>
+
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+    $(".chkStatus").click(function () {
+
+        var chk = $(this)[0].checked;
+        var idAddenda = $(this)[0].value;
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("UpdateStatus")',
+                dataType: 'json',
+                data: { IdAddenda : idAddenda, Estado: chk },
+                success: function (result) {
+                     alert('Se ha eliminado')
+
+                },
+                error: function (ex) {
+                    alert('Failed.' + ex);
+                }
+
+            });
+
+
+
+
+    });
+    });
+
+
+
+
+
+</script>
+<h2>GetAll</h2>
+<div class="row">
+
+    <div class="col-md-1 col-lg-offset-10">
+
+        @Html.ActionLink("+", "Form", "Addenda", new { @class = "btn btn-success" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+
+                <th>Editar</th>
+                <th>Id</th>
+                <th>Nombre</th>
+                @*<th>XML</th>*@
+                <th>Fecha Modificacion</th>
+                <th>Usuario</th>
+                <th>Estado</th>
+                <th>Eliminar</th>
+
+                </thead>
+                <tbody>
+                    @foreach (ML.Addendas addendas in Model.ListAddendas)
+                    {
+                        <tr>
+                            <td>
+                                <a class="btn btn-warning glyphicon glyphicon-edit" href="@Url.Action("Form","Addenda", new {IdAddenda = addendas.IdAddenda})"></a>
+                            </td>
+                            <td>@addendas.IdAddenda</td>
+                            <td>@addendas.NombreAddenda</td>
+                            @*<td>@addendas.XML</td>*@
+                            <td>@addendas.FechaModificacion</td>
+                            <td>@addendas.Usuario</td>
+                            <td>@addendas.Estado</td>
+                            <td>
+
+                                @if (addendas.Estado.Value)
+                                {
+
+                                    <label class="switch">
+                                        <input type="checkbox" checked class="chkStatus" value="@addendas.IdAddenda" />
+                                        <span class="slider"></span>
+                                    </label>
+                                }
+                                else
+                                {
+                                    <label class="switch">
+                                        <input type="checkbox" class="chkStatus" value="@addendas.IdAddenda" />
+                                        <span class="slider"></span>
+                                    </label>
+                                }
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </table>
+    </div>
+</div>
